@@ -1,144 +1,138 @@
-window.onload = function () {
-  var gotoFull = document.getElementsByClassName('full')[0];
-  gotoFull.addEventListener('click',function (){
-    window.top.location.href = 'https://codepen.io/loerm/pen/oNBMXxR';
-  });
-  var figure = document.querySelectorAll('figure');
-  // console.log(figure);
-  
-  function findXY_WH (e,that) {
-    var m_posx = 0, m_posy = 0, e_posx = 0, e_posy = 0,
-           obj = that;
-    //get mouse position on document crossbrowser
-    if (!e){e = window.event;}
-    if (e.pageX || e.pageY){
-        m_posx = e.pageX;
-        m_posy = e.pageY;
-    } else if (e.clientX || e.clientY){
-        m_posx = e.clientX + document.body.scrollLeft
-                 + document.documentElement.scrollLeft;
-        m_posy = e.clientY + document.body.scrollTop
-                 + document.documentElement.scrollTop;
-    }
-    //get parent element position in document
-    if (obj.offsetParent){
-        do { 
-            e_posx += obj.offsetLeft;
-            e_posy += obj.offsetTop;
-        } while (obj = obj.offsetParent);
-    }
-    // mouse position minus elm position is mouseposition relative to element:
-    let xFind = (m_posx-e_posx),
-        yFind = (m_posy-e_posy),
-        wFind = that.offsetWidth,
-        hFind = that.offsetHeight;
-    return [(xFind < 1) ? 1 : xFind, (yFind < 1) ? 1 : yFind, wFind, hFind];
-  } 
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
 
-  figure.forEach( item => {
-    item.addEventListener('mouseenter', function (e) {
-      let [x, y, w, h] = findXY_WH(e,this);
-      y = (y >= h) ? --h : y;
-      let ratio = w/h;
-      let obj = this;
-      
-      let ani = '';
-      
-      if (x/y < ratio && x/(h-y) < ratio){
-         ani = 'left';
-      } else if (x/y > ratio && x/(h-y) > ratio){
-        ani = 'right';
-      } else if (x/y >= ratio && x/(h-y) <= ratio){
-        ani = 'top';
-      } else if (x/y <= ratio && x/(h-y) >= ratio){
-        ani = 'bot';
-      }
-      
-      if (ani == 'left') {
-        setTimeout(function () {
-          obj.children[1].style.transition = '.3s ease';
-          obj.children[1].style.left = '0';
-          obj.children[1].style.top = '0';
-        },0);
-        obj.children[1].style.transition = 'none';
-        obj.children[1].style.left = '-100%';
-        obj.children[1].style.top = '0';
-      }
-      else if (ani == 'right') {
-        setTimeout(function () {
-          obj.children[1].style.transition = '.3s ease';
-          obj.children[1].style.left = '0';
-          obj.children[1].style.top = '0';
-        },0);
-        obj.children[1].style.transition = 'none';
-        obj.children[1].style.left = '100%';
-        obj.children[1].style.top = '0';
-      }
-      else if (ani == 'top') {
-        setTimeout(function () {
-          obj.children[1].style.transition = '.3s ease';
-          obj.children[1].style.left = '0';
-          obj.children[1].style.top = '0';
-        },0);
-        obj.children[1].style.transition = 'none';
-        obj.children[1].style.left = '0';
-        obj.children[1].style.top = '-100%';
-      }
-      else if (ani == 'bot') {
-        setTimeout(function () {
-          obj.children[1].style.transition = '.3s ease';
-          obj.children[1].style.left = '0';
-          obj.children[1].style.top = '0';
-        },0);
-        obj.children[1].style.transition = 'none';
-        obj.children[1].style.left = '0';
-        obj.children[1].style.top = '100%';
-      }
-    });
-    item.addEventListener('mouseleave', function (e) {
-      let [x, y, w, h] = findXY_WH(e,this);
-      y = (y >= h) ? --h : y;
-      let ratio = w/h;
-      let obj = this;
-      
-      let ani = '';
-      
-      if (x/y < ratio && x/(h-y) < ratio){
-         ani = 'Oleft';
-      } else if (x/y > ratio && x/(h-y) > ratio){
-        ani = 'Oright';
-      } else if (x/y >= ratio && x/(h-y) <= ratio){
-        ani = 'Otop';
-      } else if (x/y <= ratio && x/(h-y) >= ratio){
-        ani = 'Obot';
-      }
-      
-      if (ani == 'Oleft') {
-        setTimeout(function () {
-          obj.children[1].style.left = '-100%';
-          obj.children[1].style.top = '0';
-        },0);
-      }
-      else if (ani == 'Oright') {
-        setTimeout(function () {
-          obj.children[1].style.left = '100%';
-          obj.children[1].style.top = '0';
-        },0);
-      }
-      else if (ani == 'Otop') {
-        setTimeout(function () {
-          obj.children[1].style.left = '0';
-          obj.children[1].style.top = '-100%';
-        },0);
-      }
-      else if (ani == 'Obot') {
-        setTimeout(function () {
-          obj.children[1].style.left = '0';
-          obj.children[1].style.top = '100%';
-        },0);
-      }
-      
-      console.log(ani,x,y,w,h)
-    });
-  })
+/* Box styles */
+.myBox {
+  border: none;
+  padding: 5px;
+  font: 12px/36px sans-serif;
+  width: 610px;
+  height: 400px;
+  overflow-y: scroll;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: lightgrey;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ffb400;
+}
+
+.full {
+  color: #fff;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+.full span {
+  visibility: hidden;
+  padding-right: 10px;
+}
+.full:hover span {
+  visibility: visible;
+}
+
+body {
+  background: white;
+  font-family: "Poppins", sans-serif;
+}
+
+.header {
+  width: 100%;
+  height: 200px;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.header h1 {
+  font-size: 56px;
+  font-weight: 900;
+  color: black;
+  text-transform: uppercase;
+  margin: 0;
+}
+.header h1 span {
+  color: #ffb400;
+}
+.header > span {
+  pointer-events: none;
+  position: absolute;
+  font-size: 95px;
+  left: 50%;
+  letter-spacing: 10px;
+  line-height: 0.7;
+  top: 50%;
+  text-transform: uppercase;
+  font-weight: 800;
+  transform: translate(-50%, -50%);
+  color: rgba(0, 0, 0, 0.05);
+}
+
+.grid-gallery {
+  width: 600px;
+  max-width: 800px;
+  margin: auto;
+}
+.grid-gallery ul {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+}
+.grid-gallery ul li {
+  list-style-type: none;
+}
+.grid-gallery ul li figure {
+  top: 40px;
+  transition: 0.3s;
+  border-radius: 5px;
+  padding-top: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.grid-gallery ul li figure:hover div {
+  top: 0;
+}
+.grid-gallery ul li figure img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+.grid-gallery ul li figure div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 100%;
+  left: 10%;
+  background: #ffb400;
+  color: #fff;
+  font-size: 2rem;
+  display: grid;
+  place-items: center;
 }
